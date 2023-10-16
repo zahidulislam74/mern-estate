@@ -26,10 +26,6 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/test", (req, res) => {
-  res.status(200).json({ message: "API is working fine" });
-});
-
 mongoose
   .connect(MongoDBUrl)
   .then(() => {
@@ -54,4 +50,8 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
+});
+
+app.get("/test", (req, res) => {
+  res.status(200).json({ message: "API is working fine" });
 });
