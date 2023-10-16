@@ -5,7 +5,8 @@ import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 import morgan from "morgan";
 import createError from "http-errors";
-
+import userRouter from "./routes/user.route.js";
+import authRouter from "./routes/auth.router.js";
 dotenv.config();
 
 const port = process.env.PORT || 5000;
@@ -25,6 +26,10 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+
+// app.use("/api/user", userRouter);
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
 
 mongoose
   .connect(MongoDBUrl)
@@ -50,8 +55,4 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
-});
-
-app.get("/test", (req, res) => {
-  res.status(200).json({ message: "API is working fine" });
 });
